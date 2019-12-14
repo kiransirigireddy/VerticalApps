@@ -12,7 +12,6 @@ pipeline {
         stage('Build IQuote Server') {
           steps {
             build(job: 'VApps-IQuote', quietPeriod: 3)
-            build 'Configure-IQuote-Eflow-Server'
           }
         }
 
@@ -25,7 +24,7 @@ pipeline {
       }
     }
 
-    stage('') {
+    stage('Configure-IQuote-Eflow-Server') {
       steps {
         build(job: 'Configure-IQuote-Eflow-Server', propagate: true, wait: true)
       }
