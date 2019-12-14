@@ -1,7 +1,7 @@
 pipeline {
   agent none
   stages {
-    stage('Build Vertical Apps Environment') {
+    stage('Build Servers Parallelly') {
       parallel {
         stage('Build Print Flow Server') {
           steps {
@@ -12,6 +12,7 @@ pipeline {
         stage('Build IQuote Server') {
           steps {
             build(job: 'VApps-IQuote', quietPeriod: 3)
+            build 'Configure-IQuote-Eflow-Server'
           }
         }
 
@@ -21,12 +22,6 @@ pipeline {
           }
         }
 
-      }
-    }
-
-    stage('Configure- IQuoteandEflowServer') {
-      steps {
-        build 'Configure-IQuote-Eflow-Server'
       }
     }
 
