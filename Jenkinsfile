@@ -25,5 +25,11 @@ pipeline {
       }
     }
 
+    stage('Configure- IQuoteandEflowServer') {
+      steps {
+        build 'Configure-IQuote-Eflow-Server'
+      }
+    }
+
   }
 }
