@@ -25,5 +25,11 @@ pipeline {
       }
     }
 
+    stage('') {
+      steps {
+        build(job: 'Configure-IQuote-Eflow-Server', propagate: true, wait: true)
+      }
+    }
+
   }
 }
