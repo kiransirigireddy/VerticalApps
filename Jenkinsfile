@@ -24,20 +24,15 @@ pipeline {
       }
     }
 
-    stage('Post Clone Configurations') {
-      parallel {
-        stage('Configure-IQuote-Eflow-Server') {
-          steps {
-            build(job: 'Configure-IQuote-Eflow-Server', propagate: true, wait: true)
-          }
-        }
+    stage('Configure-IQuote-Eflow-Server') {
+      steps {
+        build(job: 'Configure-IQuote-Eflow-Server', propagate: true, wait: true)
+      }
+    }
 
-        stage('Configure-PrintFlow-Server') {
-          steps {
-            build(job: 'Configure-PrintFlowServer', propagate: true, wait: true, quietPeriod: 2)
-          }
-        }
-
+    stage('Configure-PrintFlow-Server') {
+      steps {
+        build(job: 'Configure-PrintFlowServer', propagate: true, wait: true, quietPeriod: 3)
       }
     }
 
