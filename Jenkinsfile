@@ -24,7 +24,7 @@ pipeline {
       }
     }
 
-    stage('Configure-IQuote-Eflow-Server') {
+    stage('Post Clone Configurations') {
       parallel {
         stage('Configure-IQuote-Eflow-Server') {
           steps {
