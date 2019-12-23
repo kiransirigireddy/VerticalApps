@@ -36,5 +36,11 @@ pipeline {
       }
     }
 
+    stage('Configure AC4D') {
+      steps {
+        build(job: 'Configure_AC4D_Server', propagate: true, quietPeriod: 2, wait: true)
+      }
+    }
+
   }
 }
