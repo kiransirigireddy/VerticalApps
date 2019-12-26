@@ -25,8 +25,19 @@ pipeline {
     }
 
     stage('Configure-IQuote-Eflow-Server') {
-      steps {
-        build(job: 'Configure-IQuote-Eflow-Server', propagate: true, wait: true)
+      parallel {
+        stage('Configure-IQuote-Eflow-Server') {
+          steps {
+            build(job: 'Configure-IQuote-Eflow-Server', propagate: true, wait: true)
+          }
+        }
+
+        stage('RDP AC4D Server') {
+          steps {
+            build(job: 'RDP-AC4DServer', propagate: true, quietPeriod: 2, wait: true)
+          }
+        }
+
       }
     }
 
