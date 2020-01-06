@@ -24,21 +24,21 @@ pipeline {
       }
     }
 
-    stage('Deploy Products') {
+    stage('Product Build from SCM') {
       parallel {
-        stage('Deploy Product A') {
+        stage('Product A Build') {
           steps {
             sleep 1
           }
         }
 
-        stage('Deploy Product 2') {
+        stage('Product B Build') {
           steps {
             sleep 1
           }
         }
 
-        stage('Deploy Product C') {
+        stage('Product C Build') {
           steps {
             sleep 1
           }
