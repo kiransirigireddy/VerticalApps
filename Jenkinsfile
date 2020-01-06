@@ -1,7 +1,7 @@
 pipeline {
   agent none
   stages {
-    stage('Deploy VM1') {
+    stage('Containers/VM from Image/Templates') {
       parallel {
         stage('Deploy VM1 from Template1') {
           steps {
