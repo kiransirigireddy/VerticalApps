@@ -24,5 +24,28 @@ pipeline {
       }
     }
 
+    stage('Deploy Products') {
+      parallel {
+        stage('Deploy Product A') {
+          steps {
+            sleep 1
+          }
+        }
+
+        stage('Deploy Product 2') {
+          steps {
+            sleep 1
+          }
+        }
+
+        stage('Deploy Product C') {
+          steps {
+            sleep 1
+          }
+        }
+
+      }
+    }
+
   }
 }
