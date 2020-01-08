@@ -92,7 +92,7 @@ pipeline {
 
         stage('Integrate Product-B') {
           steps {
-            build(job: 'Integrate Product-B', quietPeriod: 2)
+            build(job: 'IntegrateProduct-B', quietPeriod: 2)
           }
         }
 
