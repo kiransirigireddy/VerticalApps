@@ -1,46 +1,167 @@
 pipeline {
   agent none
   stages {
-    stage('Containers/VM from Image/Templates') {
+    stage('Environment') {
       parallel {
-        stage('Deploy VM1 from Template1') {
+        stage('Spin_VM-or-Contanier-1') {
           steps {
-            sleep 1
+            build(job: 'Spin_VM-or-Contanier-1', quietPeriod: 2)
           }
         }
 
-        stage('Deploy VM2 from Template2') {
+        stage('Spin_VM-or-Contanier-2') {
           steps {
-            sleep 1
+            build(job: 'Spin_VM-or-Contanier-2', quietPeriod: 3)
           }
         }
 
-        stage('Deploy VM3 from Template3') {
+        stage('Spin_VM-or-Contanier-3') {
           steps {
-            sleep 1
+            build(job: 'Spin_VM-or-Contanier-3', quietPeriod: 2)
           }
         }
 
       }
     }
 
-    stage('Product Build from SCM') {
+    stage('Build') {
       parallel {
-        stage('Product A Build') {
+        stage('Pull Source Code-GIT') {
           steps {
-            sleep 1
+            build(job: 'PullSourceCode', quietPeriod: 2)
           }
         }
 
-        stage('Product B Build') {
+        stage('Build Maven') {
           steps {
-            sleep 1
+            build(job: 'BuildMaven', quietPeriod: 2)
           }
         }
 
-        stage('Product C Build') {
+        stage('JUnit Test') {
           steps {
-            sleep 1
+            build(job: 'JunitTest', quietPeriod: 3)
+          }
+        }
+
+        stage('Jacoco Code Coverage') {
+          steps {
+            build(job: 'JacocoCodeCoverage', quietPeriod: 3)
+          }
+        }
+
+        stage('Sonar Cube Analysis') {
+          steps {
+            build(job: 'SonarCubeAnalysis', quietPeriod: 3)
+          }
+        }
+
+      }
+    }
+
+    stage('Deploy') {
+      parallel {
+        stage('Install Product A') {
+          steps {
+            build(job: 'Install Product A', quietPeriod: 2)
+          }
+        }
+
+        stage('Install Product B') {
+          steps {
+            build 'Install Product B'
+          }
+        }
+
+        stage('Install Product C') {
+          steps {
+            build(job: 'Install Product C', quietPeriod: 3)
+          }
+        }
+
+      }
+    }
+
+    stage('Product Integration') {
+      parallel {
+        stage('Integrate Product-A') {
+          steps {
+            build(job: 'IntegrateProduct-A', quietPeriod: 2)
+          }
+        }
+
+        stage('Integrate Product-B') {
+          steps {
+            build(job: 'Integrate Product-B', quietPeriod: 2)
+          }
+        }
+
+        stage('Integrate Product-C') {
+          steps {
+            build 'IntegrateProduct-C'
+          }
+        }
+
+      }
+    }
+
+    stage('Functional Test') {
+      parallel {
+        stage('Selenium Test - Firefox') {
+          steps {
+            build(job: 'Selenium Test - Firefox', quietPeriod: 2)
+          }
+        }
+
+        stage('Selenium Test - Chrome') {
+          steps {
+            build(job: 'Selenium Test - Chrome', quietPeriod: 2)
+          }
+        }
+
+        stage('Selenium Test - IE') {
+          steps {
+            build(job: 'Selenium Test - IE', quietPeriod: 2)
+          }
+        }
+
+      }
+    }
+
+    stage('Non Functional Test') {
+      parallel {
+        stage('Performance Test - Jmeter') {
+          steps {
+            build(job: 'Performance Test - Jmeter', quietPeriod: 2)
+          }
+        }
+
+        stage('OWASP-ZAP Security Test') {
+          steps {
+            build(job: 'OWASP-ZAPSecurityTest', quietPeriod: 2)
+          }
+        }
+
+      }
+    }
+
+    stage('Publish the Builds') {
+      parallel {
+        stage('Publish Build-A') {
+          steps {
+            build(job: 'PublishBuild-A', quietPeriod: 2)
+          }
+        }
+
+        stage('Publish Build-B') {
+          steps {
+            build(job: 'PublishBuild-B', quietPeriod: 2)
+          }
+        }
+
+        stage('Publish Build-C') {
+          steps {
+            build(job: 'PublishBuild-C', quietPeriod: 2)
           }
         }
 
