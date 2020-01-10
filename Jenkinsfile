@@ -1,26 +1,9 @@
 pipeline {
   agent none
   stages {
-    stage('Environment') {
-      parallel {
-        stage('Spin_VM-or-Contanier-1') {
-          steps {
-            build(job: 'Spin_VM-or-Contanier-1', quietPeriod: 2)
-          }
-        }
-
-        stage('Spin_VM-or-Contanier-2') {
-          steps {
-            build(job: 'Spin_VM-or-Contanier-2', quietPeriod: 3)
-          }
-        }
-
-        stage('Spin_VM-or-Contanier-3') {
-          steps {
-            build(job: 'Spin_VM-or-Contanier-3', quietPeriod: 2)
-          }
-        }
-
+    stage('Spin_VM-or-Contanier-1') {
+      steps {
+        build(job: 'Spin_VM-or-Contanier-1', quietPeriod: 2)
       }
     }
 
@@ -145,21 +128,21 @@ pipeline {
       }
     }
 
-    stage('Publish the Builds') {
+    stage('Publish the Docker Images') {
       parallel {
-        stage('Publish Build-A') {
+        stage('Prepare Docker Image  - A') {
           steps {
             build(job: 'PublishBuild-A', quietPeriod: 2)
           }
         }
 
-        stage('Publish Build-B') {
+        stage('Prepare Docker Image  - B') {
           steps {
             build(job: 'PublishBuild-B', quietPeriod: 2)
           }
         }
 
-        stage('Publish Build-C') {
+        stage('Prepare Docker Image  - C') {
           steps {
             build(job: 'PublishBuild-C', quietPeriod: 2)
           }
