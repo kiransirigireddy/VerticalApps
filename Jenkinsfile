@@ -144,7 +144,7 @@ pipeline {
       parallel {
         stage('Performance Test - Jmeter') {
           steps {
-            build(job: 'Performance Test - Jmeter', quietPeriod: 2)
+            build(job: 'PerformanceTest-Jmeter', quietPeriod: 2)
           }
         }
 
