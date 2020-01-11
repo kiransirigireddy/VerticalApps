@@ -1,9 +1,20 @@
 pipeline {
   agent none
   stages {
-    stage('Spin_VM-or-Contanier-1') {
-      steps {
-        build(job: 'Spin_VM-or-Contanier-1', quietPeriod: 2)
+    stage('Environment') {
+      parallel {
+        stage('Prepare -Environment') {
+          steps {
+            build(job: 'Spin_VM-or-Contanier-1', quietPeriod: 2)
+          }
+        }
+
+        stage('Download Docker Image with Pre-req') {
+          steps {
+            build(job: 'Build Docker Image - A', quietPeriod: 2)
+          }
+        }
+
       }
     }
 
@@ -44,21 +55,39 @@ pipeline {
 
     stage('Deploy') {
       parallel {
-        stage('Install Product A') {
+        stage('Build Product A Docker Image') {
           steps {
             build(job: 'Install Product A', quietPeriod: 2)
           }
         }
 
-        stage('Install Product B') {
+        stage('Build Product B Docker Image') {
           steps {
             build 'Install Product B'
           }
         }
 
-        stage('Install Product C') {
+        stage('Build Product C Docker Image') {
           steps {
             build(job: 'Install Product C', quietPeriod: 3)
+          }
+        }
+
+        stage('Spin Container - Product A') {
+          steps {
+            build(job: 'Build Docker Image - A', quietPeriod: 2)
+          }
+        }
+
+        stage('Spin Container - Product B') {
+          steps {
+            build(job: 'Build Docker Image - A', quietPeriod: 2)
+          }
+        }
+
+        stage('Spin Container - Product C') {
+          steps {
+            build(job: 'Build Docker Image - A', quietPeriod: 2)
           }
         }
 
@@ -130,19 +159,19 @@ pipeline {
 
     stage('Publish the Docker Images') {
       parallel {
-        stage('Prepare Docker Image  - A') {
+        stage('Publish Product Docker Image  - A') {
           steps {
             build(job: 'PublishBuild-A', quietPeriod: 2)
           }
         }
 
-        stage('Prepare Docker Image  - B') {
+        stage('Publish Product Docker Image  - B') {
           steps {
             build(job: 'PublishBuild-B', quietPeriod: 2)
           }
         }
 
-        stage('Prepare Docker Image  - C') {
+        stage('Publish Product Docker Image  - C') {
           steps {
             build(job: 'PublishBuild-C', quietPeriod: 2)
           }
